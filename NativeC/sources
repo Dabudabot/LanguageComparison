@@ -1,0 +1,13 @@
+TARGETNAME			= NativeC
+TARGETTYPE			= PROGRAM
+UMTYPE				= nt
+BUFFER_OVERFLOW_CHECKS 		= 0
+MINWIN_SDK_LIB_PATH		= $(SDK_LIB_PATH)
+SOURCES 			=  source.c
+
+INCLUDES 			= $(DDK_INC_PATH);
+
+TARGETLIBS 			= $(DDK_LIB_PATH)\ntdll.lib	\
+				  $(DDK_LIB_PATH)\nt.lib
+
+USE_NTDLL			= 1
