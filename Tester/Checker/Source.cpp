@@ -23,6 +23,7 @@ int main()
 			file1.close();
 			file2.close();
 			
+			system("pause");
 			return 1;
 		}
 
@@ -32,5 +33,6 @@ int main()
 
 	std::cout << "Sorted" << std::endl;
 
+	system("pause");
 	return 0;
 }

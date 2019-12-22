@@ -3,6 +3,7 @@ import java.io.*;
 public class Main
 {
 	public static void main(String[]args)  throws IOException {
+
 	  final short FILES_AMOUNT = 1000;
 	  
 	  long startTime = System.currentTimeMillis();
@@ -39,5 +40,7 @@ public class Main
 	  double estimatedTime = (System.currentTimeMillis() - startTime) / 1000.0;
 	  
 	  System.out.println("elapsed time: " + estimatedTime);
+
+	  System.in.read();
 	}
 }

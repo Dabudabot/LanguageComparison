@@ -47,5 +47,6 @@ int main()
 
 	std::cout << "elapsed time: " << elapsed_seconds.count() << std::endl;
 
+	system("pause");
 	return 0;
 }
