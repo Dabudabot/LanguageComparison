@@ -36,7 +36,7 @@ public class Main
 		writer1.close();
 	  }
 	  
-	  long estimatedTime = System.currentTimeMillis() - startTime;
+	  double estimatedTime = (System.currentTimeMillis() - startTime) / 1000.0;
 	  
 	  System.out.println("elapsed time: " + estimatedTime);
 	}
