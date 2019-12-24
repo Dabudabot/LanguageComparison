@@ -3,6 +3,43 @@
 
 #define FILES_AMOUNT 1000
 
+NTSYSAPI
+NTSTATUS
+NTAPI
+NtTerminateProcess(
+  IN HANDLE               ProcessHandle OPTIONAL,
+  IN NTSTATUS             ExitStatus
+);
+
+NTSYSAPI 
+NTSTATUS
+NTAPI
+NtDisplayString(
+	IN PUNICODE_STRING String
+);
+
+NTSTATUS 
+NtWaitForSingleObject(
+  IN HANDLE         Handle,
+  IN BOOLEAN        Alertable,
+  IN PLARGE_INTEGER Timeout
+);
+
+NTSYSAPI 
+NTSTATUS
+NTAPI
+NtCreateEvent(
+    OUT PHANDLE             EventHandle,
+    IN ACCESS_MASK          DesiredAccess,
+    IN POBJECT_ATTRIBUTES   ObjectAttributes OPTIONAL,
+    IN EVENT_TYPE           EventType,
+    IN BOOLEAN              InitialState
+);
+
+__kernel_entry NTSTATUS NtQuerySystemTime(
+  OUT PLARGE_INTEGER SystemTime
+);
+
 typedef struct _KEYBOARD_INPUT_DATA {
   USHORT UnitId;
   USHORT MakeCode;
@@ -100,7 +137,7 @@ void NtProcessStartup(void* StartupArgument)
    IO_STATUS_BLOCK io;
    LARGE_INTEGER time1, time2;
 
-   KeQuerySystemTime(&time1);
+   NtQuerySystemTime(&time1); // time in 100 nanosecods interval
 
    for (i = 0; i < FILES_AMOUNT-1; i++)
    {
@@ -114,20 +151,20 @@ void NtProcessStartup(void* StartupArgument)
 
            if (n1 > n2)
            {
-               NtWriteFile(f2, NULL, NULL, NULL, &io, n1, sizeof(SHORT), NULL, NULL);
+               NtWriteFile(f2, NULL, NULL, NULL, &io, &n1, sizeof(SHORT), NULL, NULL);
                n1 = n2;
            }
 
            NtClose(f2);
        }
 
-       NtWriteFile(f1, NULL, NULL, NULL, &io, n1, sizeof(SHORT), NULL, NULL);
+       NtWriteFile(f1, NULL, NULL, NULL, &io, &n1, sizeof(SHORT), NULL, NULL);
        NtClose(f1);
    }
 
-   KeQuerySystemTime(&time2);
+   NtQuerySystemTime(&time2);
 
-   writeLn(L"Time spend: ", time2.QuadPart - time1.QuadPart);
+   writeLn(L"Time spend: ", (ULONG) (time2.QuadPart - time1.QuadPart) / 10000);
 
    DbgBreakPoint(); // in order to see result (or we can wait on keyborad input)
    //waitOnInput();

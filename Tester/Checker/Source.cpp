@@ -9,8 +9,8 @@ int main()
 {
 	for (auto i = 0; i < FILES_AMOUNT-1; i++)
 	{
-		std::ifstream file1("..//..//Data//" + std::to_string(i) + ".txt");
-		std::ifstream file2("..//..//Data//" + std::to_string(i+1) + ".txt");
+		std::ifstream file1(std::to_string(i) + ".txt");
+		std::ifstream file2(std::to_string(i+1) + ".txt");
 		int number1, number2;
 		file1 >> number1;
 		file2 >> number2;
