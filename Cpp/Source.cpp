@@ -8,11 +8,11 @@
 int main()
 {
 	auto start = std::chrono::system_clock::now();
-	
+
 	for (auto i = 0; i < FILES_AMOUNT - 1; i++)
 	{
-		auto name1 = std::to_string(i) + ".txt";
-		
+		auto name1 = std::to_string(i);
+
 		std::ifstream file1_in(name1);
 		int number1;
 		file1_in >> number1;
@@ -20,7 +20,7 @@ int main()
 
 		for (auto j = i + 1; j < FILES_AMOUNT; j++)
 		{
-			auto name2 = std::to_string(j) + ".txt";
+			auto name2 = std::to_string(j);
 
 			std::ifstream file2_in(name2);
 			int number2;

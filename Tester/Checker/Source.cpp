@@ -8,8 +8,8 @@ int main()
 {
 	for (auto i = 0; i < FILES_AMOUNT-1; i++)
 	{
-		std::ifstream file1(std::to_string(i) + ".txt");
-		std::ifstream file2(std::to_string(i+1) + ".txt");
+		std::ifstream file1(std::to_string(i));
+		std::ifstream file2(std::to_string(i+1));
 		int number1, number2;
 		file1 >> number1;
 		file2 >> number2;
@@ -18,10 +18,10 @@ int main()
 		{
 			std::cout << "Not sorted: Files = " << i << " and " << i + 1
 			<< " numbers = " << number1 << " and " << number2 << std::endl;
-			
+
 			file1.close();
 			file2.close();
-			
+
 			system("pause");
 			return 1;
 		}

@@ -2,6 +2,7 @@
 #include "ntddk.h"
 
 #define FILES_AMOUNT 1000
+#define PREFIX L"\\??\\C:\\Data\\"
 
 NTSYSAPI
 NTSTATUS
@@ -24,6 +25,14 @@ NtWaitForSingleObject(
   IN BOOLEAN        Alertable,
   IN PLARGE_INTEGER Timeout
 );
+
+NTSTATUS RtlIntegerToChar
+ (
+  ULONG value,
+  ULONG base,
+  ULONG length,
+  PCHAR str
+ );
 
 NTSYSAPI 
 NTSTATUS
@@ -88,21 +97,27 @@ void waitOnInput()
 HANDLE open(SHORT file_num)
 {
     UNICODE_STRING string;
-    UNICODE_STRING number;
-    UNICODE_STRING suffix;
+	WCHAR buffer[20];
+	UNICODE_STRING number;
     OBJECT_ATTRIBUTES oa;
     HANDLE file;
     IO_STATUS_BLOCK io;
     LARGE_INTEGER fileSize;
-
+	WCHAR numberBuffer[4];
+	
+	number.Buffer = numberBuffer;
+	number.MaximumLength = 8;
     fileSize.QuadPart = 0;
-
-    RtlInitUnicodeString(&string, L"\\??\\C:\\Users\\W7x64\\Desktop\\Data\\");
-    RtlInitUnicodeString(&suffix, L".txt");
-    RtlIntegerToUnicodeString(file_num, 0, &number);
-    RtlAppendUnicodeStringToString(&string, &number);
-    RtlAppendUnicodeStringToString(&string, &suffix);
-
+	
+	string.Buffer = buffer;
+	string.Length = 0;
+	string.MaximumLength = 40;
+	
+	RtlZeroMemory(string.Buffer, string.MaximumLength);
+	RtlAppendUnicodeToString(&string, PREFIX);
+	RtlIntegerToUnicodeString(file_num, 0, &number);
+	RtlAppendUnicodeStringToString(&string, &number);
+	
     InitializeObjectAttributes(&oa, &string, OBJ_CASE_INSENSITIVE, NULL, NULL);
 
     NtCreateFile(&file,
@@ -124,43 +139,73 @@ void writeLn(LPWSTR Message, ULONG time)
 {
     UNICODE_STRING string;
     UNICODE_STRING number;
+	WCHAR numberBuffer[20];
+	
+	number.Buffer = numberBuffer;
+	number.MaximumLength = 20;
+	
     RtlInitUnicodeString(&string, Message);
     RtlIntegerToUnicodeString(time, 0, &number);
     NtDisplayString(&string);
     NtDisplayString(&number);
 }
 
+ULONG read(HANDLE f)
+{
+	IO_STATUS_BLOCK io;
+	CHAR buffer[4];
+	ULONG result;
+	
+	RtlZeroMemory(buffer, 4);
+	NtReadFile(f, NULL, NULL, NULL, &io, buffer, 4, NULL, NULL);
+	
+	RtlCharToInteger(buffer, 10, &result);
+	
+	return result;
+}
+
+void write(HANDLE f, ULONG value)
+{
+	CHAR buffer[5];
+	
+	IO_STATUS_BLOCK io;
+	LARGE_INTEGER offset;
+	
+	offset.QuadPart = 0;
+	
+	RtlIntegerToChar(value, 0, 5, buffer);
+	NtWriteFile(f, NULL, NULL, NULL, &io, buffer, 5, &offset, NULL);
+}
+
 void NtProcessStartup(void* StartupArgument)
 {
-   SHORT i, j, n1, n2;
+   SHORT i, j;
+   ULONG n1, n2;
    HANDLE f1, f2;
-   IO_STATUS_BLOCK io;
    LARGE_INTEGER time1, time2;
-
-	DbgBreakPoint();
 
    NtQuerySystemTime(&time1); // time in 100 nanosecods interval
 
    for (i = 0; i < FILES_AMOUNT-1; i++)
    {
        f1 = open(i);
-       NtReadFile(f1, NULL, NULL, NULL, &io, &n1, sizeof(SHORT), NULL, NULL);
+	   n1 = read(f1);
 
        for (j = i + 1; j < FILES_AMOUNT; j++)
        {
            f2 = open(j);
-           NtReadFile(f2, NULL, NULL, NULL, &io, &n2, sizeof(SHORT), NULL, NULL);
+		   n2 = read(f2);
 
            if (n1 > n2)
            {
-               NtWriteFile(f2, NULL, NULL, NULL, &io, &n1, sizeof(SHORT), NULL, NULL);
+               write(f2, n1);
                n1 = n2;
            }
 
            NtClose(f2);
        }
-
-       NtWriteFile(f1, NULL, NULL, NULL, &io, &n1, sizeof(SHORT), NULL, NULL);
+	   
+	   write(f1, n1);
        NtClose(f1);
    }
 
