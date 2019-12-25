@@ -10,14 +10,14 @@ public class Main
 
 	  for (int i = 0; i < FILES_AMOUNT - 1; i++)
 	  {
-		String name1 = i + ".txt";
+		String name1 = String.valueOf(i);
 		BufferedReader reader1 = new BufferedReader(new FileReader(name1));
 		int number1 = Integer.parseInt(reader1.readLine());
 		reader1.close();
 
 		for (int j = i + 1; j < FILES_AMOUNT; j++)
 		{
-		  String name2 = j + ".txt";
+		  String name2 = String.valueOf(j);
 		  BufferedReader reader2 = new BufferedReader(new FileReader(name2));
 		  int number2 = Integer.parseInt(reader2.readLine());
 
