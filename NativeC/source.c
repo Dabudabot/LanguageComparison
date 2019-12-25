@@ -97,7 +97,7 @@ HANDLE open(SHORT file_num)
 
     fileSize.QuadPart = 0;
 
-    RtlInitUnicodeString(&string, L"\\??\\C:\\Users\\Daulet.Tumbayev\\source\\repos\\LanguageComparison\\Data\\");
+    RtlInitUnicodeString(&string, L"\\??\\C:\\Users\\W7x64\\Desktop\\Data\\");
     RtlInitUnicodeString(&suffix, L".txt");
     RtlIntegerToUnicodeString(file_num, 0, &number);
     RtlAppendUnicodeStringToString(&string, &number);
@@ -136,6 +136,8 @@ void NtProcessStartup(void* StartupArgument)
    HANDLE f1, f2;
    IO_STATUS_BLOCK io;
    LARGE_INTEGER time1, time2;
+
+	DbgBreakPoint();
 
    NtQuerySystemTime(&time1); // time in 100 nanosecods interval
 

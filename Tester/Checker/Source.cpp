@@ -1,6 +1,5 @@
 #include <fstream>
 #include <string>
-#include <unordered_set>
 #include <iostream>
 
 #define FILES_AMOUNT 1000
