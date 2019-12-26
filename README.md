@@ -1,5 +1,5 @@
 # LanguageComparison
-My small attempt to compare native C application, C++ application and Java application
+My small attempt to compare native C application, C++ application and Java application. The idea is not just compare languages or algorithms but working with disk and filesystem with multiple io operations.
 
 ## Idea
 It is all started from the statistics logged by TODO
