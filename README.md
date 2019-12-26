@@ -1,23 +1,23 @@
 # LanguageComparison
-My small attempt to compare native C application, C++ application and Java application. The idea is not just compare languages or algorithms but working with disk and filesystem with multiple io operations.
+My small attempt to compare native C application, C++ application, and Java application. The idea is not just to compare languages or algorithms but working with disk and filesystem with multiple io operations.
 
 ## Idea
 It is all started from the statistics logged by TODO
 
 image todo
 
-I totaly agree with such numbers, however I have decided to code a simple way to compare performance by my own.
-The idea was to check to just a running time of the algorithm on different languages, but working with disk.
-So, I came up with solution to implement O(n^2) sorting algorithm on numbers inside the files.
-We have folder with 1000 files, each file contains random unique number. Algorithm have to put the smallest number
-to the first file, larger number to the second file and so on.
+I agree with such numbers, however, I have decided to code a simple way to compare performance on my own.
+The idea was to check to just a running time of the algorithm on different languages, but working with a disk.
+So, I came up with the solution to implement O(n^2) sorting algorithm on numbers inside the files.
+We have a folder with 1000 files, each file contains a random unique number. The algorithm has to put the smallest number
+to the first file, a larger number to the second file and so on.
 
-In order to make results more precise: 
-1. All work goes on VM and from snapshot
+To make results more precise: 
+1. All work goes on VM and from a snapshot
 2. Algorithms repeat sorting 50 times on different files.
-3. Algorithms sleeps first 10 minutes and 5 minutes after each folder in order to give VM enouth time to wake up after snapshot
-4. Pseudocode are equal for each language, however, for opening, reading and writing best practicies for each language was used
-    (eg. java and c++ uses buffered streams but native C read and write file in binary format)
+3. Algorithms sleep first 10 minutes and 5 minutes after each folder to give VM enough time to wake up after snapshot
+4. Pseudocode is equal for each language, however, for opening, reading and writing best practices for each language was used
+    (eg. java and c++ use buffered streams but native C read and write a file in binary format)
 
 ## Pseudocode
 ```
@@ -42,8 +42,8 @@ for each folder:
 
 ## Steps
 0. Prereq: VM - Windows 7x64 with JDK 11.0.5 and Visual Redistributable
-1. Build Generator, Checker and sorters (CPP, Java, NativeC)
-2. Copy binaries to virtual machine
+1. Build Generator, Checker, and sorters (CPP, Java, NativeC)
+2. Copy binaries to the virtual machine
 3. Run Generator
 4. Make a snapshot
 5. Run one of the sorters and note the results
