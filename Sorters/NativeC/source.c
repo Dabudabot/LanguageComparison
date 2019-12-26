@@ -102,27 +102,32 @@ void waitOnInput()
     }
 }
 
-HANDLE open(SHORT file_num)
+HANDLE open(SHORT folder_num, SHORT file_num)
 {
     UNICODE_STRING string;
-	WCHAR buffer[20];
+	WCHAR buffer[24];
 	UNICODE_STRING number;
+	WCHAR numberBuffer[4];
+	
     OBJECT_ATTRIBUTES oa;
     HANDLE file;
     IO_STATUS_BLOCK io;
     LARGE_INTEGER fileSize;
-	WCHAR numberBuffer[4];
 	
 	number.Buffer = numberBuffer;
 	number.MaximumLength = 8;
+	
     fileSize.QuadPart = 0;
 	
 	string.Buffer = buffer;
 	string.Length = 0;
-	string.MaximumLength = 40;
+	string.MaximumLength = 48;
 	
 	RtlZeroMemory(string.Buffer, string.MaximumLength);
 	RtlAppendUnicodeToString(&string, PREFIX);
+	RtlIntegerToUnicodeString(folder_num, 0, &number);
+	RtlAppendUnicodeStringToString(&string, &number);
+	RtlAppendUnicodeToString(&string, L"\\");
 	RtlIntegerToUnicodeString(file_num, 0, &number);
 	RtlAppendUnicodeStringToString(&string, &number);
 	

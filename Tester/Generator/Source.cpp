@@ -10,7 +10,7 @@
 
 int main()
 {
-	if (mkdir("C://Data") != 0)
+	if (_mkdir("C://Data") != 0)
 	{
 		std::cout << "failed to create root folder" << std::endl;
 		system("pause");
@@ -20,7 +20,7 @@ int main()
 	for (auto i = 0; i < FOLDERS_AMOUNT; i++)
 	{
 		std::string path = "C://Data//" + std::to_string(i);
-		if (mkdir(path.c_str()) != 0)
+		if (_mkdir(path.c_str()) != 0)
 		{
 			std::cout << "failed to create folder " << i << std::endl;
 			system("pause");

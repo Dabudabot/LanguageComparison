@@ -7,7 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Checker", "Checker\Checker.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Generator", "Generator\Generator.vcxproj", "{008CBC11-E607-42D6-AC94-527E35F7E4B3}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sorter", "..\Cpp\Sorter.vcxproj", "{67EC398C-CC5E-4D9C-ACDD-F306C2C67208}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sorter", "..\Sorters\Cpp\Sorter.vcxproj", "{67EC398C-CC5E-4D9C-ACDD-F306C2C67208}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
