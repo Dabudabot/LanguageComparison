@@ -1,4 +1,4 @@
-# LanguageComparison
+# Language comparison
 My small attempt to compare native C application, C++ application, and Java application. The idea is not just to compare languages or algorithms but working with disk and filesystem with multiple io operations.
 
 ## Idea
